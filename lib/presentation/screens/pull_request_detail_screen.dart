@@ -25,14 +25,12 @@ class PullRequestDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Card
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(AppConstants.defaultPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title
                     Text(
                       pullRequest.title,
                       style: theme.textTheme.headlineSmall?.copyWith(
@@ -41,7 +39,6 @@ class PullRequestDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     
-                    // Author Info
                     Row(
                       children: [
                         CircleAvatar(
@@ -101,7 +98,6 @@ class PullRequestDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             
-            // Metadata Card
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(AppConstants.defaultPadding),
@@ -152,7 +148,6 @@ class PullRequestDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             
-            // Description Card
             if (pullRequest.body.isNotEmpty) ...[
               Card(
                 child: Padding(
@@ -212,12 +207,10 @@ class PullRequestDetailScreen extends StatelessWidget {
               const SizedBox(height: 16),
             ],
             
-            // Action Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // In a real app, you might open the PR in a web view or browser
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Would open: ${pullRequest.htmlUrl}'),

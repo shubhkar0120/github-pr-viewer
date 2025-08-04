@@ -3,21 +3,13 @@ import 'package:github_pr_viewer_app/domain/usecases/get_pull_request.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-// Core
 import 'core/network/api_client.dart';
-
-// Data
 import 'data/datasources/auth_local_datasource.dart';
 import 'data/datasources/github_remote_datasource.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'data/repositories/github_repository_impl.dart';
-
-// Domain
 import 'domain/usecases/login_user.dart';
 import 'domain/usecases/logout_user.dart';
-
-// Presentation
 import 'presentation/providers/auth_provider.dart';
 import 'presentation/providers/github_provider.dart';
 import 'presentation/providers/theme_provider.dart';
@@ -29,48 +21,40 @@ import 'domain/entities/pull_request.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize SharedPreferences
+
   final sharedPreferences = await SharedPreferences.getInstance();
-  
+
   runApp(MyApp(sharedPreferences: sharedPreferences));
 }
 
 class MyApp extends StatelessWidget {
   final SharedPreferences sharedPreferences;
-  
-  const MyApp({
-    super.key,
-    required this.sharedPreferences,
-  });
-  
+
+  const MyApp({super.key, required this.sharedPreferences});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Data Sources
         Provider<AuthLocalDataSource>(
-          create: (_) => AuthLocalDataSourceImpl(sharedPreferences: sharedPreferences),
+          create: (_) =>
+              AuthLocalDataSourceImpl(sharedPreferences: sharedPreferences),
         ),
         Provider<GitHubRemoteDataSource>(
           create: (_) => GitHubRemoteDataSourceImpl(
             apiClient: ApiClient(client: http.Client()),
           ),
         ),
-        
-        // Repositories
+
         ProxyProvider<AuthLocalDataSource, AuthRepositoryImpl>(
-          update: (_, authLocalDataSource, __) => AuthRepositoryImpl(
-            localDataSource: authLocalDataSource,
-          ),
+          update: (_, authLocalDataSource, __) =>
+              AuthRepositoryImpl(localDataSource: authLocalDataSource),
         ),
         ProxyProvider<GitHubRemoteDataSource, GitHubRepositoryImpl>(
-          update: (_, githubRemoteDataSource, __) => GitHubRepositoryImpl(
-            remoteDataSource: githubRemoteDataSource,
-          ),
+          update: (_, githubRemoteDataSource, __) =>
+              GitHubRepositoryImpl(remoteDataSource: githubRemoteDataSource),
         ),
-        
-        // Use Cases
+
         ProxyProvider<AuthRepositoryImpl, LoginUser>(
           update: (_, authRepository, __) => LoginUser(authRepository),
         ),
@@ -78,14 +62,19 @@ class MyApp extends StatelessWidget {
           update: (_, authRepository, __) => LogoutUser(authRepository),
         ),
         ProxyProvider<GitHubRepositoryImpl, GetPullRequests>(
-          update: (_, githubRepository, __) => GetPullRequests(githubRepository),
+          update: (_, githubRepository, __) =>
+              GetPullRequests(githubRepository),
         ),
-        
-        // Providers
+
         ChangeNotifierProvider<ThemeProvider>(
           create: (_) => ThemeProvider(sharedPreferences),
         ),
-        ChangeNotifierProxyProvider3<LoginUser, LogoutUser, AuthRepositoryImpl, AuthProvider>(
+        ChangeNotifierProxyProvider3<
+          LoginUser,
+          LogoutUser,
+          AuthRepositoryImpl,
+          AuthProvider
+        >(
           create: (context) => AuthProvider(
             loginUser: context.read<LoginUser>(),
             logoutUser: context.read<LogoutUser>(),
@@ -100,9 +89,8 @@ class MyApp extends StatelessWidget {
               ),
         ),
         ChangeNotifierProxyProvider<GetPullRequests, GitHubProvider>(
-          create: (context) => GitHubProvider(
-            getPullRequests: context.read<GetPullRequests>(),
-          ),
+          create: (context) =>
+              GitHubProvider(getPullRequests: context.read<GetPullRequests>()),
           update: (_, getPullRequests, previous) =>
               previous ?? GitHubProvider(getPullRequests: getPullRequests),
         ),
@@ -129,9 +117,8 @@ class MyApp extends StatelessWidget {
                 case '/pull-request-detail':
                   final pullRequest = settings.arguments as PullRequest;
                   return MaterialPageRoute(
-                    builder: (context) => PullRequestDetailScreen(
-                      pullRequest: pullRequest,
-                    ),
+                    builder: (context) =>
+                        PullRequestDetailScreen(pullRequest: pullRequest),
                   );
                 default:
                   return MaterialPageRoute(
@@ -144,20 +131,15 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _getInitialScreen(AuthProvider authProvider) {
     switch (authProvider.state) {
       case AuthState.authenticated:
         return const PullRequestListScreen();
       case AuthState.loading:
-        return const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       case AuthState.unauthenticated:
       case AuthState.initial:
-      default:
         return const LoginScreen();
     }
   }
