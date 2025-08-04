@@ -43,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Logo or App Name
                     Icon(
                       Icons.code,
                       size: 80,
@@ -67,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 48),
                     
-                    // Username Field
                     TextFormField(
                       controller: _usernameController,
                       decoration: const InputDecoration(
@@ -79,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 16),
                     
-                    // Password Field
                     TextFormField(
                       controller: _passwordController,
                       decoration: InputDecoration(
@@ -104,7 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 24),
                     
-                    // Error Message
                     if (authProvider.errorMessage != null) ...[
                       Container(
                         padding: const EdgeInsets.all(12),
@@ -133,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 16),
                     ],
                     
-                    // Login Button
                     ElevatedButton(
                       onPressed: authProvider.isLoading ? null : _handleLogin,
                       child: authProvider.isLoading
@@ -146,7 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 24),
                     
-                    // Demo Info
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(

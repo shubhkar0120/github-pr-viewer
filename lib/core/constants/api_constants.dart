@@ -4,7 +4,7 @@ class ApiConstants {
   static const String defaultOwner = 'flutter';
   static const String defaultRepo = 'flutter';
   
-  // Updated to your new repository
+
   static const String repositoryOwner = 'shubhkar0120';
   static const String repositoryName = 'github-pr-viewer';
   
@@ -14,7 +14,7 @@ class ApiConstants {
     'User-Agent': 'Flutter-GitHub-PR-Viewer',
   };
   
-  // Timeouts
+
   static const int connectionTimeout = 30000;
   static const int receiveTimeout = 30000;
 }

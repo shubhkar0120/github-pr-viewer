@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import '../../core/network/api_client.dart';
-import '../../core/constants/api_constants.dart';
 import '../models/pull_request_model.dart';
 
 abstract class GitHubRemoteDataSource {

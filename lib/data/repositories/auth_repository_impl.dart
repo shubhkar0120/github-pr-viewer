@@ -11,12 +11,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> login(String username, String password) async {
     try {
-      // Simulate login process
       if (username.isEmpty || password.isEmpty) {
         throw const AuthFailure('Username and password are required');
       }
       
-      // Save fake token
       await localDataSource.saveToken(AppConstants.fakeToken);
     } catch (e) {
       if (e is AuthFailure) {

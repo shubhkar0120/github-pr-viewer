@@ -1,31 +1,3 @@
-// import '../../domain/entities/user.dart';
-
-// class UserModel extends User {
-//   const UserModel({
-//     required super.login,
-//     required super.id,
-//     required super.avatarUrl,
-//     required super.htmlUrl,
-//   });
-  
-//   factory UserModel.fromJson(Map<String, dynamic> json) {
-//     return UserModel(
-//       login: json['login'] ?? '',
-//       id: json['id'] ?? 0,
-//       avatarUrl: json['avatar_url'] ?? '',
-//       htmlUrl: json['html_url'] ?? '',
-//     );
-//   }
-  
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'login': login,
-//       'id': id,
-//       'avatar_url': avatarUrl,
-//       'html_url': htmlUrl,
-//     };
-//   }
-// }
 
 import '../../domain/entities/user.dart';
 
